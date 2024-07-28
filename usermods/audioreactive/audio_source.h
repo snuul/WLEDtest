@@ -77,7 +77,7 @@
 // https://github.com/espressif/esp-idf/issues/8538  I2S channel selection issue? (IDFGH-6918)
 // https://github.com/espressif/esp-idf/issues/6625  I2S: left/right channels are swapped for read (IDFGH-4826)
 #ifdef I2S_USE_RIGHT_CHANNEL
-#define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_LEFT
+#define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_RIGHT
 #define I2S_MIC_CHANNEL_TEXT "right channel only (work-around swapped channel bug in IDF 4.4)."
 #define I2S_PDM_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_RIGHT
 #define I2S_PDM_MIC_CHANNEL_TEXT "right channel only"
@@ -86,7 +86,7 @@
 //#define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_RIGHT_LEFT
 #define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_RIGHT
 #define I2S_MIC_CHANNEL_TEXT "left channel only (work-around swapped channel bug in IDF 4.4)."
-#define I2S_PDM_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_LEFT
+#define I2S_PDM_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_RIGHT
 #define I2S_PDM_MIC_CHANNEL_TEXT "left channel only."
 #endif
 
@@ -96,7 +96,7 @@
 #define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_RIGHT
 #define I2S_MIC_CHANNEL_TEXT "right channel only."
 #else
-#define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_LEFT
+#define I2S_MIC_CHANNEL I2S_CHANNEL_FMT_ONLY_RIGHT
 #define I2S_MIC_CHANNEL_TEXT "left channel only."
 #endif
 #define I2S_PDM_MIC_CHANNEL I2S_MIC_CHANNEL
@@ -525,7 +525,7 @@ class ES8388Source : public I2SSource {
   public:
     ES8388Source(SRate_t sampleRate, int blockSize, float sampleScale = 1.0f, bool i2sMaster=true) :
       I2SSource(sampleRate, blockSize, sampleScale) {
-      _config.channel_format = I2S_CHANNEL_FMT_ONLY_LEFT;
+      _config.channel_format = I2S_CHANNEL_FMT_ONLY_RIGHT;
     };
 
     void initialize(int8_t i2swsPin, int8_t i2ssdPin, int8_t i2sckPin, int8_t mclkPin) {
@@ -568,7 +568,7 @@ class I2SAdcSource : public I2SSource {
         .mode = i2s_mode_t(I2S_MODE_MASTER | I2S_MODE_RX | I2S_MODE_ADC_BUILT_IN),
         .sample_rate = _sampleRate,
         .bits_per_sample = I2S_SAMPLE_RESOLUTION,
-        .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
+        .channel_format = I2S_CHANNEL_FMT_ONLY_RIGHT,
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 2, 0)
         .communication_format = i2s_comm_format_t(I2S_COMM_FORMAT_STAND_I2S),
 #else
